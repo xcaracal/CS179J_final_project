@@ -1,5 +1,5 @@
-int LASER_OUTPUT = 6;
-int BUTTON_INPUT = 7;
+int LASER_OUTPUT = 5;
+int BUTTON_INPUT = 4;
 
 // TASK SCHEDULER
 typedef struct task {
