@@ -1,11 +1,11 @@
-var express = require('express');
+const express = require('express');
+const generateIdRoute = require('routes/generateId.route');
+const shootRoute = require('routes/shoot.route');
 
 const PORT = 3333;
 
-var app = express();
+const app = express();
 app.use(express.urlencoded());
-
-var current_player_pointer = 1;
 
 app.get('/', function(request, response) {
   console.log('GET /');
@@ -13,6 +13,10 @@ app.get('/', function(request, response) {
   response.writeHead(200, {'Content-Type': 'text/plain'});
   response.end(TEXT);
 });
+
+// ROUTES
+app.use('/generate_id', generateIdRoute);
+app.use('/shoot', shootRoute);
 
 app.listen(PORT);
 console.log(`Listening at http://localhost:${PORT}`)
