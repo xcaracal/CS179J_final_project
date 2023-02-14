@@ -1,6 +1,6 @@
 const express = require('express');
-const generateIdRoute = require('routes/generateId.route');
-const shootRoute = require('routes/shoot.route');
+const generateIdRoute = require('./routes/generateId.route');
+const shootRoute = require('./routes/shoot.route');
 
 const PORT = 3333;
 
