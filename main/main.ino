@@ -8,6 +8,7 @@ const unsigned short tasksNum = 1;
 task tasks[tasksNum];
 
 void setup() {
+  Serial.begin(9600);
   // Specify pins
   pinMode(LASER_OUTPUT, OUTPUT);
   pinMode(BUTTON_INPUT, INPUT);
@@ -16,11 +17,15 @@ void setup() {
   //lcd.init();
   //lcd.backlight();
   // Set up MPU
+
+  /*
   while(!mpu.begin(MPU6050_SCALE_2000DPS, MPU6050_RANGE_2G)) {
 	Serial.println("Could not find a valid MPU6050 sensor, check wiring!");
 	delay(500);
   }
-  checkSettings();
+  */
+
+  //checkSettings();
   // TASK SCHEDULER
   int i = 0;
   tasks[i].state = Laser_Init;
