@@ -49,9 +49,9 @@ enum MPU_States { MPU_Read };
 
 int MPU_TickFct(int state) {
 	if(state == MPU_Read) {
-		rawAccel = mpu_readRawAccel();
+		rawAccel = mpu.readRawAccel();
 		normAccel = mpu.readNormalizeAccel();
-		if(normAccel.XAxis <= threshold && z_angle >= 20 - threshold) {
+		if(normAccel.XAxis <= threshold && normAccel.ZAxis >= 20 - threshold) {
 			// Set reloading state here
 		}
 	}
