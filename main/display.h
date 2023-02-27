@@ -10,7 +10,7 @@ enum Screen_States { Screen_Init, Screen_Game, Screen_Respawn, Screen_Reload };
 int Screen_TickFct(int state) {
 	switch (state) {
 		case Screen_Init:
-			
+	
 			break;
 		case Screen_Game:
 
@@ -27,7 +27,8 @@ int Screen_TickFct(int state) {
 	}
 	switch (state) {	
 		case Screen_Init:
-			
+			lcd.setCursor(0,0);
+			lcd.print("Init screen ");
 			break;
 		case Screen_Game:
 			lcd.setCursor(0,0);

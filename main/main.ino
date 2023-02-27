@@ -4,7 +4,7 @@
 #include "display.h"
 
 // TASK SCHEDULER
-const unsigned short tasksNum = 1;
+const unsigned short tasksNum = 3;
 task tasks[tasksNum];
 
 void setup() {
@@ -13,17 +13,17 @@ void setup() {
   pinMode(LASER_OUTPUT, OUTPUT);
   pinMode(BUTTON_INPUT, INPUT);
   // Set up LCD
-  lcd.begin(16,2);
+  //lcd.begin(16,2);
   lcd.init();
   lcd.backlight();
   // Set up MPU
 
-  
+  /*
   while(!mpu.begin(MPU6050_SCALE_2000DPS, MPU6050_RANGE_2G)) {
 	Serial.println("Could not find a valid MPU6050 sensor, check wiring!");
 	delay(500);
   }
-  
+  */
 
   //checkSettings();
   // TASK SCHEDULER
