@@ -6,6 +6,7 @@ module.exports = class Player {
     this.id = id;
     this.ammo = PLAYER_AMMO;
     this.alive = true;
+    this.points = 420;
   }
 
   // Check before if the player is alive
