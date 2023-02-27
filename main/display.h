@@ -45,6 +45,7 @@ int Screen_TickFct(int state) {
 			state = Screen_Init;
 			break;
 	}
+  return state;
 }
 
 #endif //__DISPLAY_H__

@@ -1,7 +1,7 @@
 #include "task.h"
 #include "laser.h"
 #include "accelerometer.h"
-//#include "display.h"
+#include "display.h"
 
 // TASK SCHEDULER
 const unsigned short tasksNum = 1;
@@ -13,17 +13,17 @@ void setup() {
   pinMode(LASER_OUTPUT, OUTPUT);
   pinMode(BUTTON_INPUT, INPUT);
   // Set up LCD
-  //lcd.begin(16,2);
-  //lcd.init();
-  //lcd.backlight();
+  lcd.begin(16,2);
+  lcd.init();
+  lcd.backlight();
   // Set up MPU
 
-  /*
+  
   while(!mpu.begin(MPU6050_SCALE_2000DPS, MPU6050_RANGE_2G)) {
 	Serial.println("Could not find a valid MPU6050 sensor, check wiring!");
 	delay(500);
   }
-  */
+  
 
   //checkSettings();
   // TASK SCHEDULER
@@ -33,11 +33,11 @@ void setup() {
   tasks[i].elapsedTime = 0;
   tasks[i].TickFct = &Laser_TickFct;
   i++;
-  //tasks[i].state = Screen_Init;
-  //tasks[i].period = 200;
-  //tasks[i].elapsedTime = 0;
-  //tasks[i].TickFct = &Screen_TickFct;
-  //i++;
+  tasks[i].state = Screen_Init;
+  tasks[i].period = 200;
+  tasks[i].elapsedTime = 0;
+  tasks[i].TickFct = &Screen_TickFct;
+  i++;
   tasks[i].state = MPU_Read;
   tasks[i].period = 100;
   tasks[i].elapsedTime = 0;

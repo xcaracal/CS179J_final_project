@@ -1,8 +1,8 @@
 #ifndef __LASER_H__
 #define __LASER_H__
 
-int LASER_OUTPUT = 5;
-int BUTTON_INPUT = 4;
+int LASER_OUTPUT = 0;
+int BUTTON_INPUT = 2;
 
 enum Laser_States { Laser_Init, Laser_Depress, Laser_Press1, Laser_Press2, Laser_Wait };
 
