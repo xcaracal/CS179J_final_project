@@ -6,6 +6,12 @@ let active = false;
 let time = 300000; // milliseconds
 let current_player_id = 1;
 let players = {};
+let feed = [
+  {time: 1, message: '1 shot 2'},
+  {time: 2, message: '2 respawned'},
+  {time: 4, message: '4 respawned'},
+  {time: 3, message: '2 shot 4'}
+];
 
 // Stops and resets the game to its default values
 // This also wipes all the players currently in the game
@@ -34,7 +40,8 @@ function json() {
   return {
     active: active,
     time: time,
-    players: players
+    players: players,
+    feed: feed
   }
 }
 
