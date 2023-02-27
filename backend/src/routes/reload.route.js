@@ -5,8 +5,8 @@ const handle = require('../scripts/schema_handle.script');
 const game_controller = require('../controllers/game.controller');
 const player_controller = require('../controllers/player.controller');
 
-router.post('/', function(request, response) {
-  console.log('POST /shoot');
+router.post('/', (request, response) => {
+  console.log('POST /reload')
   const schema = Joi.object({
     id: Joi.number().integer()
       .min(1)
@@ -34,9 +34,9 @@ router.post('/', function(request, response) {
     return;
   }
 
-  const shot = player_controller.shoot(player);
+  const new_ammo = player_controller.reload(player);
   response.writeHead(200, {'Content-Type': 'text/plain'});
-  response.end(`ID ${id} ${shot ? 'shoots' : 'is out of ammo'}`);
+  response.end(`ID ${id} reloaded and now has ${new_ammo} ammo`);
 });
 
 module.exports = router;
