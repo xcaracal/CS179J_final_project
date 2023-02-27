@@ -6,7 +6,7 @@ const game_controller = require('../controllers/game.controller');
 router.post('/', function(request, response) {
   console.log('POST /generate_id');
   const body = { player: game_controller.addPlayer() };
-  response.writeHead(200, {'Content-Type': 'application/json'});
+  response.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'});
   response.end(JSON.stringify(body));
 });
 

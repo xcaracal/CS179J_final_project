@@ -4,7 +4,7 @@ const game_model = require('../models/game.model');
 
 router.get('/', (request, response) => {
   console.log('GET /status');
-  response.writeHead(200, {'Content-Type': 'application/json'});
+  response.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'});
   response.end(JSON.stringify(game_model.json()));
 });
 
