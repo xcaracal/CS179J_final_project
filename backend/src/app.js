@@ -1,6 +1,13 @@
 const express = require('express');
-const generateIdRoute = require('./routes/generateId.route');
-const shootRoute = require('./routes/shoot.route');
+
+// View routes
+const status_route = require('./routes/status.route');
+const reset_route = require('./routes/reset.route');
+
+// User routes
+const generate_id_route = require('./routes/generate_id.route');
+const shoot_route = require('./routes/shoot.route');
+const reload_route = require('./routes/reload.route');
 
 const PORT = 3333;
 
@@ -15,8 +22,11 @@ app.get('/', function(request, response) {
 });
 
 // ROUTES
-app.use('/generate_id', generateIdRoute);
-app.use('/shoot', shootRoute);
+app.use('/status', status_route);
+app.use('/reset', reset_route);
+app.use('/generate_id', generate_id_route);
+app.use('/shoot', shoot_route);
+app.use('/reload', reload_route);
 
 app.listen(PORT);
 console.log(`Listening at http://localhost:${PORT}`)
