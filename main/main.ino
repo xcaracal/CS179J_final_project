@@ -7,6 +7,10 @@
 const unsigned short tasksNum = 1;
 task tasks[tasksNum];
 
+int id = -1;
+bool shoot = false;
+bool reload = false;
+
 void setup() {
   // Specify pins
   pinMode(LASER_OUTPUT, OUTPUT);

@@ -5,6 +5,8 @@
 #include <ESP8266HTTPClient.h>
 #include <WiFiClient.h>
 
+#include "ArduinoJson-v6.20.1.h"
+
 const char* ssid = "SSID";
 const char* password = "PASSWORD";
 
@@ -38,6 +40,9 @@ void wifi_setup() {
         String payload = http.getString();
         Serial.println(payload);
         // ASSIGN ID HERE
+        ArduinoJson6201_71::DynamicJsonDocument doc(1024);
+        ArduinoJson6201_71::deserializeJson(doc, payload.c_str());
+        id = doc["id"];
     }
     http.end();
 }
