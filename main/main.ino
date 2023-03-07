@@ -2,6 +2,7 @@
 #include "laser.h"
 #include "accelerometer.h"
 //#include "display.h"
+#include vest.h
 
 // TASK SCHEDULER
 const unsigned short tasksNum = 1;
