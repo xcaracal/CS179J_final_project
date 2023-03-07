@@ -6,6 +6,9 @@
 #include <WiFiClient.h>
 #include <ArduinoJson.h>
 
+const char* ssid = "iPhone (2)";
+const char* password = "figueroa";
+
 String serverName = "http://172.104.196.152:3333/";
 
 // FUNCTIONS
