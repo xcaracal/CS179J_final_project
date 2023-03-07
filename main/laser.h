@@ -4,8 +4,8 @@
 #include "wifi.h"
 #include "holder.h"
 
-int LASER_OUTPUT = 5;
-int BUTTON_INPUT = 4;
+int LASER_OUTPUT = 15;
+int BUTTON_INPUT = 13;
 
 enum Laser_States { Laser_Init, Laser_Depress, Laser_Press1, Laser_Press2, Laser_Wait };
 
@@ -38,7 +38,9 @@ int Laser_TickFct(int state) {
       digitalWrite(LASER_OUTPUT, LOW);
       break;
     case Laser_Press1:
+      digitalWrite(LASER_OUTPUT, HIGH);
       shoot(_ID); // Call shoot WiFi function
+      break;
     case Laser_Press2:
       digitalWrite(LASER_OUTPUT, HIGH);
       break;
