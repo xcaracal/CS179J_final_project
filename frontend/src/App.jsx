@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import './App.css'
 
 function App() {
-
   const [players, setPlayer] = useState([
     {
         "id": 0,
@@ -16,6 +15,7 @@ function App() {
   const [gameState, setGame] = useState(0)
   const [minutes, setMinutes] = useState(5)
   const [seconds, setSeconds] = useState(0)
+  const [feed, setFeed] = useState([])
 
   useEffect(() => {
     if(gameState == 1) {
@@ -32,6 +32,18 @@ function App() {
         return () => { clearTimeout(timer)}
     }
   })
+  useEffect(() => {
+    const timer = setTimeout(() => {
+        fetch(import.meta.env.VITE_BACKEND + '/status')
+            .then(response => response.json())
+            .then(data => {
+                setPlayer(data.players)
+                setFeed(data.feed)
+            } )
+    }, 250)
+
+    return () => { clearTimeout(timer)}
+  })
   const formatSeconds = (seconds) => {
     if(seconds < 10) {
         return "0" + seconds
@@ -41,25 +53,23 @@ function App() {
     }
   }
   const resetGame = () => {
-    fetch("http://localhost:3333/reset")
+    fetch(import.meta.env.VITE_BACKEND + "/reset", {method: "POST"})
         .then(res => {console.log(res)})
         .catch(err => err);
     setGame(0)
     setMinutes(5)
     setSeconds(0)
   }
-  
-  const callAPI = async (option) => {
-    // Option 0: Access Game Status
-    if(option === 0) {
-        fetch('http://localhost:3333/status')
-            .then(res => {
-                console.log(res);
-            })
-            .catch(err => err);
-    }
-    // Option 1: Check if Shot
-    // Option 2: Check if Reloaded
+
+  const sortFeed = (feed) => {
+    feed.sort(function(a,b) {
+        var keyA = a.time;
+        var keyB = b.time;
+        if(keyA < keyB) return 1;
+        if(keyB < keyA) return -1;
+        return 0;
+    })
+    return feed;
   }
 
   return (
@@ -72,26 +82,26 @@ function App() {
             <div><h2>Free For All</h2></div>
             <div>
                 <button className="start" onClick={() => setGame(1)}>START GAME</button>
-                <button className="pause" onClick={() => setGame(0)}>PAUSE GAME</button>
+                <button className="pause" onClick={() => setGame(0)}>DEBUG GAME</button>
             </div>
             <button className="reset" onClick={() => resetGame()}>RESET GAME</button>
         </div>
         <div className="playerList">
             <h2>Players</h2>
-            {players.map((player, i) => {
+            {Object.keys(players).map((id) => {
                 return(
-                <div className="playerCard" key={i}>
-                    <div>ID: {player.id}</div>
-                    <div>{player.alive ? "🔫" : "💀"}</div>
-                    <div>{player.ammo} / 10</div>
-                    <div>{player.points} points</div>
+                <div className="playerCard" key={id}>
+                    <div>ID: {id}</div>
+                    <div>{players[id].alive ? "🔫" : "💀"}</div>
+                    <div>{players[id].ammo} / 10</div>
+                    <div>{players[id].points} points</div>
                 </div>
                 );
             })}
         </div>
         <div className="feed">
             <h2>Feed</h2>
-            <div className="events"></div>
+            <div className="events">{sortFeed(feed).map((object) => { return(<p key={object.time}>{object.time}: {object.message}</p>)})}</div>
         </div>
     </div>
   )
