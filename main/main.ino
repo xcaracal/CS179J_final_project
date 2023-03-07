@@ -10,6 +10,7 @@ const unsigned short tasksNum = 1;
 task tasks[tasksNum];
 
 void setup() {
+  Serial.begin(115200);
   // Specify pins
   pinMode(LASER_OUTPUT, OUTPUT);
   pinMode(BUTTON_INPUT, INPUT);
