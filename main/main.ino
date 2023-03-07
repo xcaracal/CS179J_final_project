@@ -25,11 +25,11 @@ void setup() {
   //lcd.backlight();
 
   // Set up MPU
-  while(!mpu.begin(MPU6050_SCALE_2000DPS, MPU6050_RANGE_2G)) {
+  /*while(!mpu.begin(MPU6050_SCALE_2000DPS, MPU6050_RANGE_2G)) {
 	Serial.println("Could not find a valid MPU6050 sensor, check wiring!");
 	delay(500);
   }
-  checkSettings();
+  checkSettings();*/
 
   // TASK SCHEDULER
   int i = 0;
@@ -58,7 +58,7 @@ void loop() {
   //commented code below tests vest.h
   //Serial.println(analogRead(photo_sensor)); //809-810 in classroom lighting
   //Serial.println(curr_respawn_time);
-  
+
   // TASK SCHEDULER
   unsigned char i;
   for (i = 0; i < tasksNum; ++i) {
