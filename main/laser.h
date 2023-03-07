@@ -1,6 +1,9 @@
 #ifndef __LASER_H__
 #define __LASER_H__
 
+#include "wifi.h"
+#include "holder.h"
+
 int LASER_OUTPUT = 5;
 int BUTTON_INPUT = 4;
 
@@ -35,6 +38,7 @@ int Laser_TickFct(int state) {
       digitalWrite(LASER_OUTPUT, LOW);
       break;
     case Laser_Press1:
+      shoot(_ID); // Call shoot WiFi function
     case Laser_Press2:
       digitalWrite(LASER_OUTPUT, HIGH);
       break;

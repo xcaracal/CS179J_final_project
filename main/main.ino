@@ -2,6 +2,8 @@
 #include "laser.h"
 #include "accelerometer.h"
 //#include "display.h"
+#include "wifi.h"
+#include "holder.h"
 
 // TASK SCHEDULER
 const unsigned short tasksNum = 1;
@@ -37,6 +39,8 @@ void setup() {
   tasks[i].period = 100;
   tasks[i].elapsedTime = 0;
   tasks[i].TickFct = &MPU_TickFct;
+  setup_wifi();
+  _ID = generate(); // Global ID in holder.h
 }
 
 void loop() {
