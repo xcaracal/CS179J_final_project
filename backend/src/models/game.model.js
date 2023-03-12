@@ -18,7 +18,7 @@ function reset() {
   current_player_id = 1;
   players = {};
   start_time = -1;
-  feed = [];
+  feed.length = 0;
 }
 
 function updateTime() {
@@ -36,12 +36,12 @@ function addPlayer() {
 }
 
 function getPlayer(id) {
-  updateTime()
+  updateTime();
   return players[id];
 }
 
 function json() {
-  updateTime()
+  updateTime();
   return {
     active: active,
     time: time,
