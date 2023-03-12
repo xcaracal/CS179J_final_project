@@ -11,7 +11,7 @@ const schema = Joi.object().keys({
 });
 
 router.post('/', (request, response) => {
-  console.log('POST /dead');
+  console.log('\nPOST /dead');
 
   const { error, value } = handle(request, response, schema);
   if (error) return;

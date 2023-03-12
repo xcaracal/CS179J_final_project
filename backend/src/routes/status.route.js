@@ -4,7 +4,7 @@ const create_header = require('../scripts/create_header.script');
 const game_model = require('../models/game.model');
 
 router.get('/', (request, response) => {
-  console.log('GET /status');
+  process.stdout.write('.');
   response.writeHead(200, create_header('application/json'));
   response.end(JSON.stringify(game_model.json()));
 });

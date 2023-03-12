@@ -12,7 +12,7 @@ const schema = Joi.object().keys({
 
 // Force the player to be alive
 router.post('/', (request, response) => {
-  console.log('POST /dead');
+  console.log('\nPOST /dead');
 
   const { error, value } = handle(request, response, schema);
   if (error) return;

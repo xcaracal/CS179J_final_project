@@ -5,7 +5,7 @@ const game_model = require("../models/game.model");
 const router = express.Router();
 
 router.post('/', (request, response) => {
-  console.log('POST /start');
+  console.log('\nPOST /start');
   const did_start = game_controller.start();
   let game = game_model.json();
   game.did_start = did_start;

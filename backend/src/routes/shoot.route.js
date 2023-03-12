@@ -11,7 +11,7 @@ const schema = Joi.object().keys({
 });
 
 router.post('/', function(request, response) {
-  console.log('POST /shoot');
+  console.log('\nPOST /shoot');
 
   const { error, value } = handle(request, response, schema);
   if (error) return;

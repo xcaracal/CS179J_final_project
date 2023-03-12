@@ -11,7 +11,7 @@ const schema = Joi.object().keys({
 });
 
 router.post('/', (request, response) => {
-  console.log('POST /reload')
+  console.log('\nPOST /reload')
   const { error, value } = handle(request, response, schema);
   if (error) return;
 
