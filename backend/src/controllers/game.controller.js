@@ -1,20 +1,8 @@
 const game = require('../models/game.model');
 
-let lastTickTime = -1; // The millisecond timestamp of the last tick time
-
-// The game loop
-function tick() {
-
-}
-
 // Starts the game from its current state
 function start() {
-
-}
-
-// Pauses the game at its current state
-function stop() {
-
+  return game.start();
 }
 
 function reset() {
@@ -33,9 +21,13 @@ function numPlayers() {
   return Object.keys(game.players).length;
 }
 
+function publishFeed(message) {
+  game.feed.push({time: Date.now(), message: message});
+}
+
 exports.start = start;
-exports.stop = stop;
 exports.reset = reset;
 exports.addPlayer = addPlayer;
 exports.getPlayer = getPlayer;
 exports.numPlayers = numPlayers;
+exports.publishFeed = publishFeed;

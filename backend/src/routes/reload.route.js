@@ -6,15 +6,12 @@ const create_header = require('../scripts/create_header.script');
 const game_controller = require('../controllers/game.controller');
 const player_controller = require('../controllers/player.controller');
 
+const schema = Joi.object().keys({
+  id: Joi.number().required()
+});
+
 router.post('/', (request, response) => {
   console.log('POST /reload')
-  const schema = Joi.object({
-    id: Joi.number().integer()
-      .min(1)
-      .max(game_controller.numPlayers())
-      .required()
-  });
-
   const { error, value } = handle(request, response, schema);
   if (error) return;
 
@@ -28,16 +25,12 @@ router.post('/', (request, response) => {
     return;
   }
 
-  // Check if the player is alive
-  if (!player.alive) {
-    response.writeHead(200, create_header('text/plain'));
-    response.end(`ID ${id} is dead`);
-    return;
-  }
-
-  const new_ammo = player_controller.reload(player);
-  response.writeHead(200, create_header('text/plain'));
-  response.end(`ID ${id} reloaded and now has ${new_ammo} ammo`);
+  const did_reload = player.alive;
+  player_controller.reload(player);
+  response.writeHead(200, create_header('application/json'));
+  const wrapper = { ...player }; // Make a clone of player
+  wrapper.did_reload = did_reload;
+  response.end(JSON.stringify(wrapper));
 });
 
 module.exports = router;

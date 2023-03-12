@@ -6,7 +6,8 @@ module.exports = class Player {
     this.id = id;
     this.ammo = PLAYER_AMMO;
     this.alive = true;
-    this.points = 420;
+    this.points = 0;
+    this.last_dead_time = -1;
   }
 
   // Check before if the player is alive
@@ -21,8 +22,15 @@ module.exports = class Player {
     return this.ammo;
   }
 
+  dead() {
+    this.alive = false;
+    this.ammo = 0;
+    this.last_dead_time = Date.now();
+  }
+
   respawn() {
     this.alive = true;
     this.ammo = PLAYER_AMMO;
+    this.last_dead_time = -1;
   }
 }

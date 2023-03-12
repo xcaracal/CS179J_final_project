@@ -10,28 +10,9 @@ function App() {
         "points": 0 
     }
   ])
-// 0: Stopped Game
-// 1: Started Game
-  const [gameState, setGame] = useState(0)
-  const [minutes, setMinutes] = useState(5)
-  const [seconds, setSeconds] = useState(0)
   const [feed, setFeed] = useState([])
+  const [millis, setMillis] = useState(300000);
 
-  useEffect(() => {
-    if(gameState == 1) {
-        const timer = setTimeout(() => {
-            if(seconds == 0) {
-                setMinutes(minutes - 1);
-                setSeconds(59);
-            }
-            else {
-                setSeconds(seconds - 1);
-            }
-        }, 1000)
-
-        return () => { clearTimeout(timer)}
-    }
-  })
   useEffect(() => {
     const timer = setTimeout(() => {
         fetch(import.meta.env.VITE_BACKEND + '/status')
@@ -39,26 +20,43 @@ function App() {
             .then(data => {
                 setPlayer(data.players)
                 setFeed(data.feed)
+                setMillis(data.time);
             } )
     }, 250)
 
     return () => { clearTimeout(timer)}
   })
-  const formatSeconds = (seconds) => {
-    if(seconds < 10) {
-        return "0" + seconds
-    }
-    else {
-        return seconds;
-    }
+
+  function millisToMinutesAndSeconds(ms) {
+    const minutes = Math.floor(ms / 60000);
+    const seconds = ((ms % 60000) / 1000).toFixed(0);
+    return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
   }
+
   const resetGame = () => {
     fetch(import.meta.env.VITE_BACKEND + "/reset", {method: "POST"})
         .then(res => {console.log(res)})
         .catch(err => err);
-    setGame(0)
-    setMinutes(5)
-    setSeconds(0)
+  }
+
+  function timeConverter(UNIX_timestamp){
+    var a = new Date(UNIX_timestamp);
+    var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    var year = a.getFullYear();
+    var month = months[a.getMonth()];
+    var date = a.getDate();
+    var hour = a.getHours();
+    var min = a.getMinutes();
+    var sec = a.getSeconds();
+    var time = date + ' ' + month + ' ' + year + ' ' + String(hour).padStart(2, '0') + ':' + String(min).padStart(2, '0') + ':' + String(sec).padStart(2, '0') ;
+    return time;
+  }
+
+  const startGame = () => {
+    let status = {};
+    fetch(import.meta.env.VITE_BACKEND + "/start", {method: "POST"})
+      .then(res => {console.log(res); status = res;})
+      .catch(err => err);
   }
 
   const sortFeed = (feed) => {
@@ -76,13 +74,12 @@ function App() {
     <div className="App">
         <div className="timer">
             <div><h2>TIMER</h2></div>
-            <div><h1>{minutes}:{formatSeconds(seconds)}</h1></div>
+            <div><h1>{millisToMinutesAndSeconds(millis)}</h1></div>
         </div>
         <div className="controls">
             <div><h2>Free For All</h2></div>
             <div>
-                <button className="start" onClick={() => setGame(1)}>START GAME</button>
-                <button className="pause" onClick={() => setGame(0)}>DEBUG GAME</button>
+                <button className="start" onClick={() => startGame()}>START GAME</button>
             </div>
             <button className="reset" onClick={() => resetGame()}>RESET GAME</button>
         </div>
@@ -94,14 +91,13 @@ function App() {
                     <div>ID: {id}</div>
                     <div>{players[id].alive ? "🔫" : "💀"}</div>
                     <div>{players[id].ammo} / 10</div>
-                    <div>{players[id].points} points</div>
                 </div>
                 );
             })}
         </div>
         <div className="feed">
             <h2>Feed</h2>
-            <div className="events">{sortFeed(feed).map((object) => { return(<p key={object.time}>{object.time}: {object.message}</p>)})}</div>
+            <div className="events">{sortFeed(feed).map((object) => { return(<p key={object.time}>{timeConverter(object.time)}: <b>{object.message}</b></p>)})}</div>
         </div>
     </div>
   )
