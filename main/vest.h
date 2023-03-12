@@ -9,7 +9,7 @@ int buzzer = 12;
 unsigned char j;
 unsigned char curr_respawn_time = 0; //the time player is at currently during respawn
 const int total_respawn_time = 50; //period = 200 ms => respwan time = 10 secs of total respawn time
-const int ps_threshold = 900; //>= 900? means photosensor registers laser input
+const int ps_threshold = 700; //>= 900? means photosensor registers laser input
 
 enum Vest_States { Vest_Init, Vest_Hit, Vest_NotHit, Vest_Respawning };
 
@@ -47,12 +47,12 @@ int Vest_TickFct(int state) {
       digitalWrite(blue_LED, LOW);
       digitalWrite(white_LED, LOW);
       digitalWrite(red_LED, HIGH);
-      /*for(j = 0; j < 100; j++){
+      for(j = 0; j < 100; j++){
         digitalWrite(buzzer, HIGH);
         delay(2);
         digitalWrite(buzzer, LOW);
         delay(2);
-      }*/
+      }
       curr_respawn_time = 0;
       break;
     case Vest_NotHit:

@@ -53,6 +53,7 @@ int MPU_TickFct(int state) {
 		normAccel = mpu.readNormalizeAccel();
 		if(normAccel.XAxis <= threshold && normAccel.ZAxis >= 20 - threshold) {
 			// Set reloading state here
+      Serial.println("Reload");
 		}
 	}
 	else state = MPU_Read;

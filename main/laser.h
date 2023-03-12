@@ -1,10 +1,10 @@
 #ifndef __LASER_H__
 #define __LASER_H__
 
-//#include "wifi.h"
+#include "wifi.h"
 #include "holder.h"
 
-int LASER_OUTPUT = 15;
+int LASER_OUTPUT = 16;
 int BUTTON_INPUT = 13;
 
 enum Laser_States { Laser_Init, Laser_Depress, Laser_Press1, Laser_Press2, Laser_Wait };
@@ -39,7 +39,8 @@ int Laser_TickFct(int state) {
       break;
     case Laser_Press1:
       digitalWrite(LASER_OUTPUT, HIGH);
-      //shoot(_ID); // Call shoot WiFi function
+      shoot(_ID); // Call shoot WiFi function
+      _AMMO = _AMMO - 1;
       break;
     case Laser_Press2:
       digitalWrite(LASER_OUTPUT, HIGH);

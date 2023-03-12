@@ -1,13 +1,13 @@
 #ifndef __WIFI_H__
 #define __WIFI_H__
 
-//#include <ESP8266WiFi.h>
-//#include <ESP8266HTTPClient.h>
-//#include <WiFiClient.h>
-//#include <ArduinoJson.h>
+#include <ESP8266WiFi.h>
+#include <ESP8266HTTPClient.h>
+#include <WiFiClient.h>
+#include <ArduinoJson.h>
 
-const char* ssid = "iPhone (2)";
-const char* password = "figueroa";
+const char* ssid = "0x69 50 31 31 50 4D";
+const char* password = "sv7gu4dy84rez";
 
 String serverName = "http://172.104.196.152:3333/";
 
