@@ -1,9 +1,13 @@
 #include <Wire.h>
 #include <MPU6050.h>
+#include "holder.h"
 
 float threshold = 2.00;
 
 MPU6050 mpu;
+// Y Axis = 8
+// Z Axis = -4
+// X Axis = 0
 
 void checkSettings() {
   Serial.println();
@@ -45,17 +49,43 @@ void checkSettings() {
 Vector rawAccel;
 Vector normAccel;
 
-enum MPU_States { MPU_Read };
+enum MPU_States { MPU_Read, MPU_High };
+
+bool tester(Vector normAccel) {
+  bool result = true;
+  if(!(normAccel.XAxis <= 2 && normAccel.XAxis >= -2)) return false;
+  if(!(normAccel.ZAxis < 0)) return false;
+  if(!(normAccel.YAxis > 4)) return false;
+  return result;
+}
 
 int MPU_TickFct(int state) {
-	if(state == MPU_Read) {
-		rawAccel = mpu.readRawAccel();
-		normAccel = mpu.readNormalizeAccel();
-		if(normAccel.XAxis <= threshold && normAccel.ZAxis >= 20 - threshold) {
-			// Set reloading state here
-      Serial.println("Reload");
-		}
-	}
-	else state = MPU_Read;
+  rawAccel = mpu.readRawAccel();
+  normAccel = mpu.readNormalizeAccel();
+  Serial.print("X AXIS: ");
+  Serial.println(normAccel.XAxis);
+  Serial.print("Z AXIS: ");
+  Serial.println(normAccel.ZAxis);
+  switch(state) {
+    case MPU_Read:
+      if(tester(normAccel)) {
+        state = MPU_High;
+        digitalWrite(reloadPin, HIGH);
+      }
+      else state = MPU_Read;
+    break;
+    case MPU_High:
+      if(!tester(normAccel)) {
+        state = MPU_Read;
+        digitalWrite(reloadPin, LOW);
+      }
+      else state = MPU_High;
+    break;
+    default:
+    state = MPU_Read;
+    break;
+  }
 	return state;
 }
+
+

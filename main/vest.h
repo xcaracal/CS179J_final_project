@@ -2,14 +2,14 @@
 #define __VEST_H__
 
 int photo_sensor = A0; //ADC0
-int blue_LED = 0;
-int red_LED = 2;
-int white_LED = 14;
-int buzzer = 12;
+int blue_LED = 13; //0
+int red_LED = 12; //2
+int white_LED = 11; //14
+int buzzer = 10; //12
 unsigned char j;
 unsigned char curr_respawn_time = 0; //the time player is at currently during respawn
 const int total_respawn_time = 50; //period = 200 ms => respwan time = 10 secs of total respawn time
-const int ps_threshold = 700; //>= 900? means photosensor registers laser input
+const int ps_threshold = 1000; //>= 900? means photosensor registers laser input
 
 enum Vest_States { Vest_Init, Vest_Hit, Vest_NotHit, Vest_Respawning };
 
@@ -47,6 +47,7 @@ int Vest_TickFct(int state) {
       digitalWrite(blue_LED, LOW);
       digitalWrite(white_LED, LOW);
       digitalWrite(red_LED, HIGH);
+      digitalWrite(alivePin, HIGH);
       for(j = 0; j < 100; j++){
         digitalWrite(buzzer, HIGH);
         delay(2);
@@ -60,6 +61,7 @@ int Vest_TickFct(int state) {
       digitalWrite(white_LED, HIGH);
       digitalWrite(red_LED, LOW);
       digitalWrite(buzzer, LOW);
+      digitalWrite(alivePin, LOW);
       break;
     case Vest_Respawning:
       digitalWrite(blue_LED, LOW);
